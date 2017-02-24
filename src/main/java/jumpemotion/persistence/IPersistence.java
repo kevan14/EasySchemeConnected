@@ -8,6 +8,7 @@ package jumpemotion.persistence;
 import java.util.List;
 import jumpemotion.model.Citizen;
 import jumpemotion.model.Observation;
+import jumpemotion.model.Registration;
 
 /**
  *
@@ -30,5 +31,11 @@ public interface IPersistence {
     public List<Observation> getAllOBservations();
     
     public boolean addObservation(String ssn, String name, String creator);
+    
+    public List<Registration> getAllRegistrations();
+    
+    public List<Registration> getAllRegistrationsFromSsn(String ssn);
+    
+    public boolean addRegistrationToObservation(String observationID, String registration, String createdBy);
     
 }
