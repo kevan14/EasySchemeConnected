@@ -2,8 +2,8 @@ package jumpemotion.easyscheme;
 
 import java.util.List;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
-import static javax.ws.rs.HttpMethod.PUT;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -14,34 +14,31 @@ import javax.ws.rs.core.Response;
 import jumpemotion.model.Citizen;
 import jumpemotion.persistence.Database;
 
-
 @Path("citizens")
 public class CitizenResource {
 
- 
     @GET
     @Produces(MediaType.APPLICATION_XML)
-    public List<Citizen> getAllCitizens(){
+    public List<Citizen> getAllCitizens() {
         return Database.getInstance().getAllCitizens();
-               
+
     }
-    
+
     @GET
-    @Path("/{id}")
+    @Path("/{ssn}")
     @Produces(MediaType.APPLICATION_XML)
-    public Citizen getCitizen(@PathParam("id") String id) {
+    public Citizen getCitizen(@PathParam("ssn") String id) {
         Citizen c = Database.getInstance().retrieveCitizen(id);
         return c;
     }
-    
+
     @PUT
     @Consumes(MediaType.APPLICATION_XML)
-    public Response updateCitizen(Citizen toUpdate){
+    public Response updateCitizen(Citizen toUpdate) {
         Response r;
-        if(Database.getInstance().updateCitizen(toUpdate)) {
+        if (Database.getInstance().updateCitizen(toUpdate)) {
             r = Response.ok().build();
-        }
-        else {
+        } else {
             r = Response.notModified().build();
         }
         return r;
@@ -59,8 +56,22 @@ public class CitizenResource {
             }
 
         } else {
-         r = Response.noContent().build();
+            r = Response.noContent().build();
         }
         return r;
     }
+
+    @DELETE
+    @Consumes(MediaType.APPLICATION_XML)
+    public Response deleteCitizen(Citizen toDelete) {
+        Response r;
+        if (toDelete != null && toDelete.acceptable()) {
+            Database.getInstance().deleteCitizen(toDelete);
+            r = Response.ok().build();
+        } else {
+            r = Response.notModified().build();
+        }
+        return r;
+    }
+
 }

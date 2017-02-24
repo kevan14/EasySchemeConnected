@@ -7,6 +7,7 @@ package jumpemotion.persistence;
 
 import java.util.List;
 import jumpemotion.model.Citizen;
+import jumpemotion.model.Observation;
 
 /**
  *
@@ -14,12 +15,20 @@ import jumpemotion.model.Citizen;
  */
 public interface IPersistence {
     
-    public boolean persistCitizen(Citizen citizen);
+    public boolean persistCitizen(Citizen toCreate);
     
     public Citizen retrieveCitizen(String id);
     
-    public boolean updateCitizen(Citizen citizen);
+    public boolean updateCitizen(Citizen toUpdate);
+    
+    public boolean deleteCitizen(Citizen toDelete);
     
     public List<Citizen> getAllCitizens();
+    
+    public List<Observation> getObservationsFromSsn(String ssn);
+    
+    public List<Observation> getAllOBservations();
+    
+    public boolean addObservation(String ssn, String name, String creator);
     
 }
