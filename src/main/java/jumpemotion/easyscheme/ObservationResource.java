@@ -24,34 +24,6 @@ import jumpemotion.persistence.Database;
 @Path("observations")
 public class ObservationResource {
     
-    @GET
-    @Produces(MediaType.APPLICATION_XML)
-    public List<Observation> getAllObservations() {
-        return Database.getInstance().getAllOBservations();
-    }
 
-    @GET
-    @Path("/{ssn}")
-    public List<Observation> getAllObservationsFromSsn(@PathParam("ssn") String ssn) {
-        return Database.getInstance().getObservationsFromSsn(ssn);
-    }
-
-    @POST
-    @Consumes(MediaType.APPLICATION_XML)
-    public Response createObservation(Observation toCreate) {
-        Response r = null;
-        if (toCreate != null && toCreate.acceptable()) {
-
-            if (Database.getInstance().addObservation(toCreate.getSsnRelation(), toCreate.getName(), toCreate.getCreatedBy())) {
-                r = Response.ok().build();
-            } else {
-                r = Response.noContent().build();
-            }
-        }
-       
-
-        return r;
-
-    }
 
 }
