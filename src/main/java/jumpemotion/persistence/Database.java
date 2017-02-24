@@ -25,7 +25,6 @@ public class Database implements IPersistence {
     private static IPersistence instance = new Database();
     private Map<String, Citizen> citizens = new HashMap<String, Citizen>();
     private Map<String, List<Observation>> observations = new HashMap<String, List<Observation>>();
-    private Map<String, List<Registration>> registrations = new HashMap<String, List<Registration>>();
 
     private Database() {
         init();
@@ -42,8 +41,6 @@ public class Database implements IPersistence {
         addObservation("87654321", "PN", "Passer");
         addObservation("87654321", "Afføring", "Passer");
         
-        addRegistrationToObservation(observations.get("12345678").get(0).getId(), "Tjek", "Passer");
-        addRegistrationToObservation(observations.get("87654321").get(0).getId(), "Tjek", "Passer");
 
     }
 
@@ -128,40 +125,5 @@ public class Database implements IPersistence {
         return result;
     }
 
-    @Override
-    public List<Registration> getAllRegistrations() {
-        List<Registration> result = new ArrayList<Registration>();
-        for(List<Registration> list : registrations.values()) {
-            for(Registration inList : list) {
-                result.add(inList);
-            }
-        }
-        return result;
-    }
-
-    @Override
-    public boolean addRegistrationToObservation(String observationID, String registration, String createdBy) {
-        if(!registrations.containsKey(observationID)) {
-            registrations.put(observationID, new ArrayList<Registration>());
-        }
-        
-        List<Registration> result = registrations.get(observationID);
-
-        result.add(new Registration(createdBy, observationID, registration));
-        registrations.replace(observationID, result);
-        return true;
-    }
-
-    @Override
-    public List<Registration> getAllRegistrationsFromSsn(String ssn) {
-        List<Registration> result = new ArrayList<>();
-        List<Observation> obs = observations.get(ssn);
-        for(Observation o : obs) {
-            for(Registration r : registrations.get(o.getId())) {
-                result.add(r);
-            }
-        }
-        return result;
-    }
 
 }

@@ -32,10 +32,6 @@ public interface IPersistence {
     
     public boolean addObservation(String ssn, String name, String creator);
     
-    public List<Registration> getAllRegistrations();
-    
-    public List<Registration> getAllRegistrationsFromSsn(String ssn);
-    
-    public boolean addRegistrationToObservation(String observationID, String registration, String createdBy);
+
     
 }
