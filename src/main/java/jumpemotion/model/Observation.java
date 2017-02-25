@@ -27,7 +27,7 @@ public class Observation {
     private String createdBy;
 
     public Observation() {
-
+        this.created = new Date();
     }
 
     public Observation(String name, String ssnRelation, String creator) {

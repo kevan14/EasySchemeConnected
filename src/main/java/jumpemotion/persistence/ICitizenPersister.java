@@ -14,24 +14,15 @@ import jumpemotion.model.Registration;
  *
  * @author Kennet_Skole
  */
-public interface IPersistence {
+public interface ICitizenPersister {
+
+    public Citizen createCitizen(Citizen toCreate);
     
-    public boolean persistCitizen(Citizen toCreate);
-    
-    public Citizen retrieveCitizen(String id);
-    
-    public boolean updateCitizen(Citizen toUpdate);
-    
-    public boolean deleteCitizen(Citizen toDelete);
+    public Citizen getCitizen(String ssn);
     
     public List<Citizen> getAllCitizens();
     
-    public List<Observation> getObservationsFromSsn(String ssn);
+    public boolean deleteCitizen(Citizen toDelete);
     
-    public List<Observation> getAllOBservations();
-    
-    public boolean addObservation(String ssn, String name, String creator);
-    
-
-    
+    public Citizen updateCitizen(Citizen toUpdate);
 }

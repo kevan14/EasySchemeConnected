@@ -14,8 +14,11 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import jumpemotion.common.IRegistrationService;
 import jumpemotion.model.Registration;
-import jumpemotion.persistence.Database;
+import jumpemotion.persistence.CitizenDatabase;
+import jumpemotion.service.RegistrationService;
+import sun.reflect.generics.visitor.Reifier;
 
 /**
  *
@@ -24,5 +27,26 @@ import jumpemotion.persistence.Database;
 @Path("registrations")
 public class RegistrationResource {
 
+    private IRegistrationService service = RegistrationService.getInstance();
   
+    @GET
+    @Path("/{ObservationID}")
+    public List<Registration> getAllRegistrationsFromObservationID(@PathParam("observationID") String observationID) {
+        return service.getAllRegistrationsFromObservationID(observationID);
+    }
+    
+    @POST
+    @Path("/{observationID}")
+    @Consumes(MediaType.APPLICATION_XML)
+    public Response createRegistration(@PathParam("observationID") String observationID, Registration toCreate) {
+        Response r;
+        Registration reg = service.createRegistration(observationID, toCreate);
+        if(reg != null) {
+            r = Response.ok().type(MediaType.APPLICATION_XML).entity(reg).build();
+        }
+        else {
+            r = Response.noContent().build();
+        }
+        return r;
+    }
 }

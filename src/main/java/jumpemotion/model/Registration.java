@@ -21,7 +21,7 @@ public class Registration {
     private String registration;
     
     public Registration() {
-        
+        this.created = new Date();
     }
     
     public Registration(String registeredBy, String observationId, String Registration) {
